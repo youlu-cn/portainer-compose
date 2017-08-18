@@ -4,6 +4,7 @@ services:
   proxy:
     build: nginx/
     container_name: "portainer-proxy"
+    restart: always
     ports:
       - "80:80"
     networks:
@@ -12,12 +13,14 @@ services:
   templates:
     image: portainer/templates
     container_name: "portainer-templates"
+    restart: always
     networks:
       - local
 
   portainer:
     image: portainer/portainer
     container_name: "portainer-app"
+    restart: always
     command: --templates http://templates/templates.json --tlsverify
     networks:
       - local
@@ -28,6 +31,7 @@ services:
   watchtower:
     image: centurylink/watchtower
     container_name: "portainer-watchtower"
+    restart: always
     command: --cleanup portainer-app
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -35,6 +39,7 @@ services:
   ldap:
     image: <>ldap:v1.2
     container_name: ldap
+    restart: always
     networks:
       - local
 
