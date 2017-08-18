@@ -18,12 +18,12 @@ services:
   portainer:
     image: portainer/portainer
     container_name: "portainer-app"
-    command: --templates http://templates/templates.json
+    command: --templates http://templates/templates.json --tlsverify
     networks:
       - local
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/portainer/data:/data
+      - /data/docker/portainer/data:/data
 
   watchtower:
     image: centurylink/watchtower
@@ -32,6 +32,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+  ldap:
+    image: <>ldap:v1.2
+    container_name: ldap
+    networks:
+      - local
+
 networks:
   local:
-    driver: bridge
+    external: false
